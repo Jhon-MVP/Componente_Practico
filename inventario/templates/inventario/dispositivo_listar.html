@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">💻 {{ titulo }}</h1>
+    
+    <div class="d-flex justify-content-end mb-3">
+        <a href="{% url 'inventario:dispositivo_crear' %}" class="btn btn-primary">➕ Nuevo Dispositivo</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover shadow-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>Serial/Inventario</th>
+                    <th>Tipo</th>
+                    <th>Modelo</th>
+                    <th>Marca</th>
+                    <th>Fecha de Compra</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for dispositivo in objetos %}
+                <tr>
+                    <td>{{ dispositivo.serial }}</td>
+                    <td>{{ dispositivo.nombre }}</td>
+                    <td>{{ dispositivo.modelo }}</td>
+                    <td>{{ dispositivo.marca.nombre }}</td>
+                    <td>{{ dispositivo.fecha_compra|date:"Y-m-d" }}</td>
+                    <td class="text-center">
+                        <a href="{% url 'inventario:dispositivo_editar' pk=dispositivo.pk %}" class="btn btn-sm btn-info text-white">Editar</a>
+                        <a href="{% url 'inventario:dispositivo_eliminar' pk=dispositivo.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center text-muted">No hay dispositivos registrados en el inventario.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

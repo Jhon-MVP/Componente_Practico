@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}Menú Principal{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">💻 Menú Principal del Inventario Tecnológico</h1>
+    <p class="lead">Bienvenido, **{{ user.get_full_name|default:user.username }}**. Selecciona una opción para gestionar el inventario.</p>
+
+    <div class="row g-4 mt-3">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary h-100 shadow">
+                <div class="card-header">Gestión Central</div>
+                <div class="card-body">
+                    <h5 class="card-title">Inventario de Dispositivos</h5>
+                    <p class="card-text">Consulta, agrega y edita la lista principal de equipos (laptops, monitores, etc.).</p>
+                    <a href="{% url 'inventario:dispositivo_listar' %}" class="btn btn-light w-100">Ver Dispositivos</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-success h-100 shadow">
+                <div class="card-header">Movimiento de Equipos</div>
+                <div class="card-body">
+                    <h5 class="card-title">Asignación a Usuarios</h5>
+                    <p class="card-text">Registra qué dispositivo está en manos de qué empleado y la fecha de entrega.</p>
+                    <a href="{% url 'inventario:asignacion_listar' %}" class="btn btn-light w-100">Ver Asignaciones</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-info h-100 shadow">
+                <div class="card-header">Historial y Costos</div>
+                <div class="card-body">
+                    <h5 class="card-title">Registro de Mantenimientos</h5>
+                    <p class="card-text">Documenta el historial de servicio (preventivo/correctivo) y los costos asociados.</p>
+                    <a href="{% url 'inventario:mantenimiento_listar' %}" class="btn btn-light w-100">Ver Mantenimientos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

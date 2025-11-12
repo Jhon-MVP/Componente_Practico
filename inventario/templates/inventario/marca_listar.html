@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}{{ titulo }}{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">{{ titulo }}</h1>
+    
+    <div class="d-flex justify-content-end mb-3">
+        <a href="{% url 'inventario:marca_crear' %}" class="btn btn-primary">➕ Nueva Marca</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover shadow-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre de la Marca</th>
+                    <th>Descripción</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for marca in objetos %}
+                <tr>
+                    <td>{{ marca.pk }}</td>
+                    <td>{{ marca.nombre }}</td>
+                    <td>{{ marca.descripcion|default:"N/A" }}</td>
+                    <td class="text-center">
+                        <a href="{% url 'inventario:marca_editar' pk=marca.pk %}" class="btn btn-sm btn-info text-white">Editar</a>
+                        <a href="{% url 'inventario:marca_eliminar' pk=marca.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center text-muted">No hay marcas registradas.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
