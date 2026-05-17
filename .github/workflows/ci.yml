@@ -1,0 +1,35 @@
+name: CI - Integracion Continua
+
+on:
+  push:
+    branches: [ main, 'feature/**', 'fix/**' ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Verificar sintaxis del proyecto
+        run: |
+          python -m py_compile inventario/models.py
+          python -m py_compile inventario/views.py
+          python -m py_compile usuario/views.py
+
+      - name: Ejecutar tests
+        run: |
+          python manage.py test inventario --verbosity=2
